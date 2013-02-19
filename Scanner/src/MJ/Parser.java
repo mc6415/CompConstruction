@@ -4,8 +4,8 @@
 package MJ;
 
 import java.util.*;
-import MJ.SymTab.*;
-import MJ.CodeGen.*;
+//import MJ.SymTab.*;
+//import MJ.CodeGen.*;
 
 public class Parser {
 	private static final int  // token codes
@@ -85,7 +85,7 @@ public class Parser {
 			errors++;
 		}
 		errDist = 0;
-		System.exit(1);
+		//System.exit(1);
 	}
 
 	//-------------- parsing methods (in alphabetical order) -----------------
@@ -124,8 +124,10 @@ public class Parser {
 		//Add (number | charConst)
 		if(sym == number)
 			check(number);
-		if(sym == charCon)
+		else if(sym == charCon)
 			check(charCon);
+		else
+			error("Contant malformed");
 		check(semicolon);
 	}
 	
@@ -137,10 +139,8 @@ public class Parser {
 		check(ident);
 		for(;;)
 		{
-			if(sym == comma || sym == ident)
-			{
-				check(sym);
-			}
+			check(ident);
+			if(sym == comma)scan();
 			else
 				break;
 		}
@@ -162,14 +162,33 @@ public class Parser {
 	// Type = ident ["[" "]"].
 	private static void MethodDecl()
 	{
+		if(sym == ident) Type();
+		else if(sym == void_) check(void_);
+		else error("NOOOOO!");
+		check(ident);
+		check(lpar);
+		if(sym == ident)
+			FormPars();
+		check(rpar);
 		
 	}
 	
+	// Type = ident [ "["  "]" ].
 	private static void Type()
+	{
+		check(ident);
+		if(sym == lbrack)
+		{
+			scan();
+			check(rbrack);
+		}
+	}
+
+	private static void FormPars()
 	{
 		
 	}
-
+	
 	public static void parse() {
 		// initialize symbol sets
 		BitSet s;

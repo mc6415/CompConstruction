@@ -1,4 +1,4 @@
-/* MicroJava Parser Tester
+ /* MicroJava Parser Tester
    ========================
    Place this file in a subdirectory MJ
    Compile with
