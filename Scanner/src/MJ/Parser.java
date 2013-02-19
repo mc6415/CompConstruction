@@ -92,7 +92,7 @@ public class Parser {
 
 	// Program = "program" ident {ConstDecl | ClassDecl | VarDecl} '{' {MethodDecl} '}'.
 	private static void Program() {
-		check(program);
+		check(program_);
 		check(ident);
 		
 		for (;;) {
@@ -113,12 +113,44 @@ public class Parser {
 		check(rbrace);
 	}
 	
+	// ConstDecl = ConstDecl = "final" Type ident "=" (number | charConst) ";".
 	private static void ConstDecl()
+	{
+		check(final_);
+		//Need to add Type here
+		check(ident);
+		check(assign);
+		//Add (number | charConst)
+		if(sym == number)
+			check(number);
+		if(sym == charCon)
+			check(charCon);
+		check(semicolon);
+	}
+	
+	//VarDecl = Type ident {"," ident } ";".
+	private static void VarDecl()
 	{
 		
 	}
-
-	TODO  // add parsing methods for all productions
+	
+	// ClassDecl = "class" ident "{" {VarDecl} "}".
+	private static void ClassDecl()
+	{
+		check(class_);
+		check(ident);
+		check(lbrace);
+		while (sym == class_)
+			VarDecl();
+		check(rbrace);
+	}
+	
+	// MethodDecl = (Type | "void") ident "(" [FormPars] ")" {VarDecl} Block.
+	// Type = ident ["[" "]"].
+	private static void MethodDecl()
+	{
+		
+	}
 
 	public static void parse() {
 		// initialize symbol sets
