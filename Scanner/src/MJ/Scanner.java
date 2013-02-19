@@ -99,6 +99,7 @@ public class Scanner {
 		
 		switch(ch)
 		{
+		case '\'': CharCon(t); break;
 		case 'a':case 'b': case 'c': case 'd': case'e': case'f':case'g':case'h':case'i':case'j':case'k':case'l':case'm':case'n':case'o':case'p':case'q':case'r':case's':case't':case'u':case'v':case'w':case'x':case'y':case'z':
 		case'A':case'B':case'C':case'D':case'E':case'F':case'G':case'H':case'I':case'J':case'K':case'L':case'M':case'N':case'O':case'P':case'Q':case'R':case'S':case'T':case'U':case'V':case'W':case'X':case'Y':case'Z':
 			readName(t);break;
@@ -205,7 +206,17 @@ public class Scanner {
 	
 	private static void CharCon(Token t)
 	{
+		int i = 0;
 		
+		while(ch != '\n')
+		{
+			lex[i] = ch;
+			i++;
+			nextCh();
+		}
+		
+			t.string = new String(lex,0,i);
+			System.out.print("line "+line+", col "+col+ ": "+t.string);
 	}
 }
 
