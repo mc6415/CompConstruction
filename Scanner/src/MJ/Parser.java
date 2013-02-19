@@ -136,7 +136,6 @@ public class Parser {
 	private static void VarDecl()
 	{
 		Type();
-		check(ident);
 		for(;;)
 		{
 			check(ident);
@@ -184,9 +183,18 @@ public class Parser {
 		}
 	}
 
+	//FormPars = Type ident  {"," Type ident}.
 	private static void FormPars()
 	{
-		
+		for(;;)
+		{
+			Type();
+			check(ident);
+			if (sym == comma)
+				scan();
+			else
+				break;
+		}
 	}
 	
 	public static void parse() {
