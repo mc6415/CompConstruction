@@ -199,8 +199,7 @@ public class Scanner {
 			}
 			catch(NumberFormatException e)
 			{
-				t.kind = none;
-				System.err.print("Invalid Number!");
+				System.err.print("line "+line+", col "+col+": Invalid Number!\n");
 			}
 	}
 	
