@@ -118,6 +118,7 @@ public class Parser {
 	{
 		check(final_);
 		//Need to add Type here
+		Type();
 		check(ident);
 		check(assign);
 		//Add (number | charConst)
@@ -128,10 +129,22 @@ public class Parser {
 		check(semicolon);
 	}
 	
-	//VarDecl = Type ident {"," ident } ";".
+	// VarDecl = Type ident {"," ident } ";".
+	// Type = ident ["[" "]"].
 	private static void VarDecl()
 	{
-		
+		Type();
+		check(ident);
+		for(;;)
+		{
+			if(sym == comma || sym == ident)
+			{
+				check(sym);
+			}
+			else
+				break;
+		}
+		check(semicolon);
 	}
 	
 	// ClassDecl = "class" ident "{" {VarDecl} "}".
@@ -148,6 +161,11 @@ public class Parser {
 	// MethodDecl = (Type | "void") ident "(" [FormPars] ")" {VarDecl} Block.
 	// Type = ident ["[" "]"].
 	private static void MethodDecl()
+	{
+		
+	}
+	
+	private static void Type()
 	{
 		
 	}
