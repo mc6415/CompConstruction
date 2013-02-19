@@ -208,20 +208,36 @@ public class Scanner {
 	{
 		nextCh();
 		int i = 0;
-		while (ch != '\'' && ch != eol && ch != eofCh) {
+		int curline = line, curcol = col;
+		
+		while (ch != '\'' && ch != eol && ch != eofCh)
+		{
 			lex[i++] = ch; nextCh();
 		}
-		if (ch == '\'') {
+		
+		if (ch == '\'')
+		{
 			nextCh();
-			if (i == 1) {
+			if (i == 1) 
+			{
 				t.val = lex[0];
-			} else if (i == 2 && lex[0] == '\\') {
-				if (lex[1] == 'r') t.val = 13;
-				else if (lex[1] == 'n') t.val = 10;
-				else if (lex[1] == 't') t.val = 8;
-				else System.err.println("-- invalid character constant");
-			} else System.err.println("-- invalid character constant");
-		} else System.err.println("-- invalid character constant");
+			}
+			else if (i == 2 && lex[0] == '\\') 
+			{
+				if (lex[1] == 'r') 
+					t.val = 13;
+				else if (lex[1] == 'n') 
+					t.val = 10;
+				else if (lex[1] == 't')
+					t.val = 8;
+				else 
+					System.err.println("line "+curline+", col "+curcol+": -- invalid character constant");
+			} 
+			else 
+				System.err.println("line "+curline+", col "+curcol+": -- invalid character constant");
+		} 
+		else 
+			System.err.println("line "+curline+", col "+curcol+": -- invalid character constant");
 		t.kind = charCon;
 	}
 }
