@@ -206,20 +206,23 @@ public class Scanner {
 	
 	private static void CharCon(Token t)
 	{
+		nextCh();
 		int i = 0;
-		int curline = line;
-		int curcol = col;
-			
-		while(ch != eol)
-		{
-			lex[i] = ch;
-			i++;
-			nextCh();
+		while (ch != '\'' && ch != eol && ch != eofCh) {
+			lex[i++] = ch; nextCh();
 		}
-		t.string = new String(lex, 1, i-3);
-				
-		System.out.println("line "+curline+", col "+curcol+": "+t.string);
-		
+		if (ch == '\'') {
+			nextCh();
+			if (i == 1) {
+				t.val = lex[0];
+			} else if (i == 2 && lex[0] == '\\') {
+				if (lex[1] == 'r') t.val = 13;
+				else if (lex[1] == 'n') t.val = 10;
+				else if (lex[1] == 't') t.val = 8;
+				else System.err.println("-- invalid character constant");
+			} else System.err.println("-- invalid character constant");
+		} else System.err.println("-- invalid character constant");
+		t.kind = charCon;
 	}
 }
 
