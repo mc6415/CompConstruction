@@ -207,16 +207,19 @@ public class Scanner {
 	private static void CharCon(Token t)
 	{
 		int i = 0;
-		
-		while(ch != '\n')
+		int curline = line;
+		int curcol = col;
+			
+		while(ch != eol)
 		{
 			lex[i] = ch;
 			i++;
 			nextCh();
 		}
+		t.string = new String(lex, 1, i-3);
+				
+		System.out.println("line "+curline+", col "+curcol+": "+t.string);
 		
-			t.string = new String(lex,0,i);
-			System.out.print("line "+line+", col "+col+ ": "+t.string);
 	}
 }
 
