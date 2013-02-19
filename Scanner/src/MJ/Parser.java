@@ -85,13 +85,37 @@ public class Parser {
 			errors++;
 		}
 		errDist = 0;
+		System.exit(1);
 	}
 
 	//-------------- parsing methods (in alphabetical order) -----------------
 
 	// Program = "program" ident {ConstDecl | ClassDecl | VarDecl} '{' {MethodDecl} '}'.
 	private static void Program() {
-		TODO  // add parsing actions
+		check(program);
+		check(ident);
+		
+		for (;;) {
+			if (sym == final_) 
+				ConstDecl();
+			else if (sym == ident)
+				VarDecl();
+			else if (sym == class_) 
+				ClassDecl();
+			else 
+				break;
+		}
+		
+		check(lbrace);
+		while (sym == void_ || sym == ident)
+			MethodDecl();
+		
+		check(rbrace);
+	}
+	
+	private static void ConstDecl()
+	{
+		
 	}
 
 	TODO  // add parsing methods for all productions
