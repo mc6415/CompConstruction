@@ -99,32 +99,157 @@ public class Scanner {
 		
 		switch(ch)
 		{
-		case '\'': CharCon(t); break;
-		case 'a':case 'b': case 'c': case 'd': case'e': case'f':case'g':case'h':case'i':case'j':case'k':case'l':case'm':case'n':case'o':case'p':case'q':case'r':case's':case't':case'u':case'v':case'w':case'x':case'y':case'z':
-		case'A':case'B':case'C':case'D':case'E':case'F':case'G':case'H':case'I':case'J':case'K':case'L':case'M':case'N':case'O':case'P':case'Q':case'R':case'S':case'T':case'U':case'V':case'W':case'X':case'Y':case'Z':
-			readName(t);break;
-		case'0':case'1':case'2':case'3':case'4':case'5':case'6':case'7':case'8':case'9':
-			readNumber(t);break;
-		case ';': nextCh();t.kind = semicolon; break;
-		case '.': nextCh();t.kind = period; break;
-		case eofCh: t.kind=eof;break; //no nextCh() any more
-		case ',': nextCh();t.kind = comma; break;
-		case '+': nextCh();t.kind = plus; break;
-		case '-': nextCh();t.kind = minus; break;
-		case '*': nextCh();t.kind = times; break;
-		case '(': nextCh();t.kind = lpar; break;
-		case ')': nextCh();t.kind = rpar; break;
-		case '{': nextCh();t.kind = lbrace; break;
-		case '}': nextCh();t.kind = rbrace; break;
-		case '[': nextCh();t.kind = lbrack; break;
-		case ']': nextCh();t.kind = rbrack; break;
-		case '%': nextCh();t.kind = rem; break;
-		case '/': nextCh();
+		case '\'': 
+			CharCon(t); 
+			break;
+			
+		case 'a':
+		case 'b': 
+		case 'c': 
+		case 'd': 
+		case'e': 
+		case'f':
+		case'g':
+		case'h':
+		case'i':
+		case'j':
+		case'k':
+		case'l':
+		case'm':
+		case'n':
+		case'o':
+		case'p':
+		case'q':
+		case'r':
+		case's':
+		case't':
+		case'u':
+		case'v':
+		case'w':
+		case'x':
+		case'y':
+		case'z':
+		case'A':
+		case'B':
+		case'C':
+		case'D':
+		case'E':
+		case'F':
+		case'G':
+		case'H':
+		case'I':
+		case'J':
+		case'K':
+		case'L':
+		case'M':
+		case'N':
+		case'O':
+		case'P':
+		case'Q':
+		case'R':
+		case'S':
+		case'T':
+		case'U':
+		case'V':
+		case'W':
+		case'X':
+		case'Y':
+		case'Z':
+			readName(t);
+			break;
+			
+		case'0':
+		case'1':
+		case'2':
+		case'3':
+		case'4':
+		case'5':
+		case'6':
+		case'7':
+		case'8':
+		case'9':
+			readNumber(t);
+			break;
+			
+		case ';': 
+			nextCh();
+			t.kind = semicolon;
+			break;
+			
+		case '.': 
+			nextCh();
+			t.kind = period;
+			break;
+			
+		case eofCh: 
+			t.kind=eof;
+			break; //no nextCh() any more
+			
+		case ',': 
+			nextCh();
+			t.kind = comma; 
+			break;
+			
+		case '+': 
+			nextCh();
+			t.kind = plus;
+			break;
+			
+		case '-':
+			nextCh();
+			t.kind = minus; 
+			break;
+			
+		case '*': 
+			nextCh();
+			t.kind = times; 
+			break;
+			
+		case '(': 
+			nextCh();
+			t.kind = lpar;
+			break;
+			
+		case ')':
+			nextCh();
+			t.kind = rpar; 
+			break;
+			
+		case '{':
+			nextCh();
+			t.kind = lbrace;
+			break;
+			
+		case '}': 
+			nextCh();
+			t.kind = rbrace;
+			break;
+			
+		case '[': 
+			nextCh();
+			t.kind = lbrack; 
+			break;
+			
+		case ']': 
+			nextCh();
+			t.kind = rbrack; 
+			break;
+			
+		case '%': 
+			nextCh();
+			t.kind = rem;
+			break;
+			
+		case '/': 
+			nextCh();
 			if (ch == '/') {
 				do nextCh(); while (ch != '\n' && ch != eofCh);
 				t = next();  // call scanner recursively
-			} else t.kind = slash;
+			} 
+			else 
+				t.kind = slash;
 			break;
+			
 		case '=': nextCh();
 			if (ch == '=')
 				t.kind = eql;
@@ -200,7 +325,7 @@ public class Scanner {
 			}
 			catch(NumberFormatException e)
 			{
-				System.err.print("line "+line+", col "+col+": Invalid Number!\n");
+				System.out.print("line "+line+", col "+col+": Invalid Number!\n");
 			}
 	}
 	
@@ -212,7 +337,9 @@ public class Scanner {
 		
 		while (ch != '\'' && ch != eol && ch != eofCh)
 		{
-			lex[i++] = ch; nextCh();
+			lex[i] = ch;
+			i++;
+			nextCh();
 		}
 		
 		if (ch == '\'')
@@ -231,13 +358,13 @@ public class Scanner {
 				else if (lex[1] == 't')
 					t.val = 8;
 				else 
-					System.err.println("line "+curline+", col "+curcol+": -- invalid character constant");
+					System.out.println("line "+curline+", col "+curcol+": -- invalid character constant");
 			} 
 			else 
-				System.err.println("line "+curline+", col "+curcol+": -- invalid character constant");
+				System.out.println("line "+curline+", col "+curcol+": -- invalid character constant");
 		} 
 		else 
-			System.err.println("line "+curline+", col "+curcol+": -- invalid character constant");
+			System.out.println("line "+curline+", col "+curcol+": -- invalid character constant");
 		t.kind = charCon;
 	}
 }
