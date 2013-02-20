@@ -231,9 +231,18 @@ public class Parser {
 		}
 	}
 	
+	// Term = Factor {Mulop Factor}.
 	public static void Term()
 	{
+		if (sym == ident)
+		{
+			for(;;){
+				Factor();
+			}
 		
+		}
+		else
+			error("Incorrect term");
 	}
 	
 	// Expr = ["-"] Term {Addop Term}.
@@ -270,9 +279,40 @@ public class Parser {
 		else error("Illegal character where factor should be");
 	}
 	
+	// ActPars = "(" [ Expr {"," Expr} ] ")".
 	public static void ActPars()
 	{
-		 	
+		 	check(lpar);
+		 	for(;;){
+		 		if(sym == minus || sym == ident)
+		 		{
+		 			Expr();
+		 			if(sym == comma)scan();
+		 			else break;
+		 		}
+		 		else
+		 			break;
+		 	}
+	}
+	
+	// Condition = Expr Relop Expr.
+	public static void Condition()
+	{
+		Expr();
+		Relop();
+		Expr();
+	}
+	
+	// Relop = "==" | "!=" | ">" | ">=" | "<" | "<="
+	public static void Relop()
+	{
+		if(sym == eql)scan();
+		else if (sym == neq)scan();
+		else if (sym == gtr)scan();
+		else if (sym == geq)scan();
+		else if (sym == lss)scan();
+		else if (sym == leq)scan();
+		else error("Equality Symbol expected");
 	}
 	
 	public static void parse() {
