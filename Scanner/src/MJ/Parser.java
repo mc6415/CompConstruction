@@ -315,6 +315,26 @@ public class Parser {
 		else error("Equality Symbol expected");
 	}
 	
+	/*  Statement = Designator ("=" Expr | ActPars) ";"
+	| "if" "(" Condition ")" Statement ["else" Statement]
+	| "while" "(" Condition ")" Statement
+	| "return" [Expr] ";"
+	| "read" "(" Designator ")" ";"
+	| "print" "(" Expr ["," number] ")" ";"
+	| Block
+	| ";".  */
+	public static void Statement()
+	{
+		if(sym == if_)
+		{
+			check(if_);
+			check(lpar);
+			Condition();
+			check(rpar);
+			Statement();
+		}
+	}
+	
 	public static void parse() {
 		// initialize symbol sets
 		BitSet s;
