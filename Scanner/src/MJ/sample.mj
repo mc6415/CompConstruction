@@ -9,7 +9,7 @@ program P
 	void main()
 		int x, i;
 	{ //---------- Initialize val
-		val = new Table;
+  		val = new Table;
 		val.pos = new int[size]; val.neg = new int[size];
 		i = 0;
 		while (i < size) {

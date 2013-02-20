@@ -173,6 +173,9 @@ public class Parser {
 		if(sym == ident)
 			FormPars();
 		check(rpar);
+		while(sym == ident)
+			VarDecl();
+		Block();
 		
 	}
 	
