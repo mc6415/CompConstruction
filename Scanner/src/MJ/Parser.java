@@ -332,6 +332,57 @@ public class Parser {
 			Condition();
 			check(rpar);
 			Statement();
+			if(sym == else_)
+			{
+				check(else_);
+				Statement();
+			}
+		}
+		
+		if(sym == ident)
+		{
+			Designator();
+			if(sym == eql){
+				check(eql);
+				Expr();
+			}
+			else if(sym == lpar)ActPars();
+			check(semicolon);
+		}
+		
+		if(sym == while_)
+		{
+			check(while_);
+			check(lpar);
+			Condition();
+			check(rpar);
+			Statement();
+		}
+		
+		if(sym == return_){
+			if(sym == minus || sym == ident)
+			{
+				Expr();
+			}
+			check(semicolon);
+		}
+		
+		if(sym == return_)
+		{
+			if(sym == minus || sym == ident)
+			{
+				Expr();
+			}
+			check(semicolon);
+		}
+		
+		if(sym == read_)
+		{
+			check(read_);
+			check(lpar);
+			Designator();
+			check(rpar);
+			check(semicolon);
 		}
 	}
 	
