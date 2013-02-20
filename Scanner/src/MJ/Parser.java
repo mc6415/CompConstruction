@@ -359,14 +359,6 @@ public class Parser {
 			Statement();
 		}
 		
-		if(sym == return_){
-			if(sym == minus || sym == ident)
-			{
-				Expr();
-			}
-			check(semicolon);
-		}
-		
 		if(sym == return_)
 		{
 			if(sym == minus || sym == ident)
@@ -384,6 +376,35 @@ public class Parser {
 			check(rpar);
 			check(semicolon);
 		}
+		
+		if(sym == print_)
+		{
+			check(lpar);
+			Expr();
+			if(sym == comma)
+			{
+				check(comma);
+				check(number);
+			}
+			check(rpar);
+			check(semicolon);
+		}
+		
+		if(sym == lbrace){
+			Block();
+		}
+		
+		if(sym == semicolon)scan();
+	}
+	
+	
+	// Block = "{" {Statement} "}".
+	public static void Block()
+	{
+		check(lbrace);
+		while(sym == if_ || sym == ident || sym == while_ || sym == return_ || sym == read_ || sym == print_ || sym == lbrace || sym == semicolon)
+			Statement();
+		check(rbrace);
 	}
 	
 	public static void parse() {
