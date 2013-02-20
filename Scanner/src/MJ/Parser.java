@@ -163,7 +163,7 @@ public class Parser {
 	{
 		if(sym == ident) Type();
 		else if(sym == void_) check(void_);
-		else error("NOOOOO!");
+		else error("Not a valid method declaration!");
 		check(ident);
 		check(lpar);
 		if(sym == ident)
@@ -195,6 +195,84 @@ public class Parser {
 			else
 				break;
 		}
+	}
+	
+	// Mulop = "*" | "/" | "%"
+	private static void Mulop()
+	{
+		if(sym == times)scan();
+		else if(sym == slash)scan();
+		else if(sym == rem)scan();
+		else error("Not a valid multiplication");
+	}
+	
+	// Addop = "+" | "-".
+	private static void Addop()
+	{
+		if(sym == plus)scan();
+		else if(sym == minus)scan();
+		else error("Not a valid addition/subtraction");
+	}
+	
+	// Designator = ident {("." ident) | ("[" Expr "]")}.
+	private static void Designator()
+	{
+		check(ident);
+		for(;;){
+			if(sym == period)
+				check(ident);
+			else if(sym == lbrack){
+				Expr();
+				check(rbrack);
+			}
+			else
+				error("Malformed Designation");
+			break;
+		}
+	}
+	
+	public static void Term()
+	{
+		
+	}
+	
+	// Expr = ["-"] Term {Addop Term}.
+	public static void Expr()
+	{
+		if(sym == minus)scan();
+		Term();
+		
+	}
+	
+	// Factor = Designator [ActPars]
+	// | number
+	// | charConst
+	// | "new" ident ["[" Expr "]"]
+	// | "(" Expr ")".
+	public static void Factor()
+	{
+		if(sym == number)scan();
+		else if(sym == charCon)scan();
+		else if(sym == new_){
+			check(ident);
+			if(sym == lbrack){
+				Expr();
+				check(rbrack);
+			}
+		}
+		else if(sym == lpar){
+			Expr();
+			check(rpar);
+		}
+		else if(sym == ident){
+			if(sym == lpar)ActPars();
+		}
+		else error("Illegal character where factor should be");
+	}
+	
+	public static void ActPars()
+	{
+		 	
 	}
 	
 	public static void parse() {
