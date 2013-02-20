@@ -102,8 +102,12 @@ public class Parser {
 				VarDecl();
 			else if (sym == class_) 
 				ClassDecl();
-			else 
+			else if (sym == rbrace || sym == eof)
 				break;
+			else {
+				error("declaration expected");
+				do scan(); while (sym != ident && sym != final_ && sym != class_ && sym != lbrace && sym != eof);
+			}
 		}
 		
 		check(lbrace);
@@ -152,7 +156,7 @@ public class Parser {
 		check(class_);
 		check(ident);
 		check(lbrace);
-		while (sym == class_)
+		while (sym == ident)
 			VarDecl();
 		check(rbrace);
 	}
