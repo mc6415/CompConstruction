@@ -120,6 +120,7 @@ public class Parser {
 	// ConstDecl = ConstDecl = "final" Type ident "=" (number | charConst) ";".
 	private static void ConstDecl()
 	{
+		System.out.println("-- ConstDecl()");
 		check(final_);
 		//Need to add Type here
 		Type();
@@ -155,6 +156,7 @@ public class Parser {
 	// ClassDecl = "class" ident "{" {VarDecl} "}".
 	private static void ClassDecl()
 	{
+		System.out.println("ClassDecl()");
 		check(class_);
 		check(ident);
 		check(lbrace);
@@ -233,39 +235,43 @@ public class Parser {
 		System.out.println("Before Designator sym == "+sym);
 		System.out.println("-- Designator()");
 		check(ident);
-		for(;;){
+		for (;;){
 			if(sym == period){
 				check(period);
 				check(ident);}
 			else if(sym == lbrack){
+				scan();
 				Expr();
 				check(rbrack);
 			}
-			else
-				error("Incorrect Designation");
-			break;
+			else break;
 		}
 	}
 	
 	// Term = Factor {Mulop Factor}.
 	public static void Term()
 	{
-		if (sym == ident)
-		{
-			for(;;){
-				Factor();
-			}
-		
+		System.out.println("-- Term()");
+		Factor();
+		while (sym == times || sym == slash || sym == rem) {
+			if (sym == times) scan();
+			else if (sym == slash) scan();
+			else if (sym == rem) scan();
+			Factor();
 		}
-		else
-			error("Incorrect term");
 	}
 	
 	// Expr = ["-"] Term {Addop Term}.
 	public static void Expr()
 	{
+		System.out.println("-- Expr()");
 		if(sym == minus)scan();
 		Term();
+		while(sym == plus || sym == minus){
+			if (sym == plus)scan();
+			else if (sym == minus)scan();
+			Term();			
+		}
 		
 	}
 	
@@ -276,20 +282,25 @@ public class Parser {
 	// | "(" Expr ")".
 	public static void Factor()
 	{
+		System.out.println("-- Factor()");
 		if(sym == number)scan();
 		else if(sym == charCon)scan();
 		else if(sym == new_){
+			scan();
 			check(ident);
 			if(sym == lbrack){
+				scan();
 				Expr();
 				check(rbrack);
 			}
 		}
 		else if(sym == lpar){
+			scan();
 			Expr();
 			check(rpar);
 		}
 		else if(sym == ident){
+			Designator();
 			if(sym == lpar)ActPars();
 		}
 		else error("Illegal character where factor should be");
@@ -298,6 +309,7 @@ public class Parser {
 	// ActPars = "(" [ Expr {"," Expr} ] ")".
 	public static void ActPars()
 	{
+			System.out.println("-- ActPars()");
 		 	check(lpar);
 		 	for(;;){
 		 		if(sym == minus || sym == ident)
@@ -314,6 +326,7 @@ public class Parser {
 	// Condition = Expr Relop Expr.
 	public static void Condition()
 	{
+		
 		Expr();
 		Relop();
 		Expr();
@@ -359,8 +372,8 @@ public class Parser {
 		if(sym == ident)
 		{
 			Designator();
-			if(sym == eql){
-				check(eql);
+			if(sym == assign){
+				check(assign);
 				Expr();
 			}
 			else if(sym == lpar)ActPars();
@@ -419,6 +432,7 @@ public class Parser {
 	// Block = "{" {Statement} "}".
 	public static void Block()
 	{
+		System.out.println("-- Block()");
 		check(lbrace);
 		while(sym == if_ || sym == ident || sym == while_ || sym == return_ || sym == read_ || sym == print_ || sym == lbrace || sym == semicolon)
 			Statement();
