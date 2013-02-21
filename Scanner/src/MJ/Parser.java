@@ -161,6 +161,7 @@ public class Parser {
 		check(rbrace);
 	}
 	
+	
 	// MethodDecl = (Type | "void") ident "(" [FormPars] ")" {VarDecl} Block.
 	// Type = ident ["[" "]"].
 	private static void MethodDecl()
