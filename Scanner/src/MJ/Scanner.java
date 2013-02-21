@@ -257,20 +257,24 @@ public class Scanner {
 				t.kind = assign;
 			break;
 		case '<': nextCh();
-			if (ch == '=')
+			if (ch == '='){
 				t.kind = leq;
+				nextCh();
+			}
 			else
 				t.kind = lss;
 			break;
 		case '>': nextCh();
-			if (ch == '=')
+			if (ch == '='){
 				t.kind = geq;
+				nextCh();}	
 			else
 				t.kind = gtr;
 			break;
 		case '!': nextCh();
 			if (ch == '=')
 				t.kind = neq;
+			nextCh();
 			break;
 		default: nextCh();t.kind = none; break;
 		}
