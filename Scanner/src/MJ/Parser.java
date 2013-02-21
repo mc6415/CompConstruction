@@ -167,6 +167,7 @@ public class Parser {
 	// Type = ident ["[" "]"].
 	private static void MethodDecl()
 	{
+		System.out.println("-- MethodDecl()");
 		if(sym == ident) Type();
 		else if(sym == void_) check(void_);
 		else error("Not a valid method declaration!");
@@ -183,6 +184,7 @@ public class Parser {
 	// Type = ident [ "["  "]" ].
 	private static void Type()
 	{
+		System.out.println("-- Type()");
 		check(ident);
 		if(sym == lbrack)
 		{
@@ -194,6 +196,7 @@ public class Parser {
 	//FormPars = Type ident  {"," Type ident}.
 	private static void FormPars()
 	{
+		System.out.println("-- FormPars()");
 		for(;;)
 		{
 			Type();
@@ -208,6 +211,7 @@ public class Parser {
 	// Mulop = "*" | "/" | "%"
 	private static void Mulop()
 	{
+		System.out.println("-- Mulop()");
 		if(sym == times)scan();
 		else if(sym == slash)scan();
 		else if(sym == rem)scan();
@@ -217,6 +221,7 @@ public class Parser {
 	// Addop = "+" | "-".
 	private static void Addop()
 	{
+		System.out.println("-- Addop()");
 		if(sym == plus)scan();
 		else if(sym == minus)scan();
 		else error("Not a valid addition/subtraction");
@@ -229,14 +234,15 @@ public class Parser {
 		System.out.println("-- Designator()");
 		check(ident);
 		for(;;){
-			if(sym == period)
-				check(ident);
+			if(sym == period){
+				check(period);
+				check(ident);}
 			else if(sym == lbrack){
 				Expr();
 				check(rbrack);
 			}
 			else
-				error("Malformed Designation");
+				error("Incorrect Designation");
 			break;
 		}
 	}
@@ -335,6 +341,7 @@ public class Parser {
 	| ";".  */
 	public static void Statement()
 	{
+		System.out.println("-- Statement");
 		if(sym == if_)
 		{
 			check(if_);
