@@ -67,11 +67,11 @@ public class Parser {
 		la = Scanner.next();
 		sym = la.kind;
 		errDist++;
-		/*
+		
 		System.out.print("line " + la.line + ", col " + la.col + ": " + name[sym]);
 		if (sym == ident) System.out.print(" (" + la.string + ")");
 		if (sym == number || sym == charCon) System.out.print(" (" + la.val + ")");
-		System.out.println();*/
+		System.out.println();
 	}
 
 	private static void check(int expected) {
@@ -139,10 +139,12 @@ public class Parser {
 	// Type = ident ["[" "]"].
 	private static void VarDecl()
 	{
+		System.out.println("--VarDecl");
 		Type();
 		for(;;)
 		{
 			check(ident);
+			System.out.println("after ident, sym = " + sym);
 			if(sym == comma)scan();
 			else
 				break;
@@ -173,6 +175,8 @@ public class Parser {
 		if(sym == ident)
 			FormPars();
 		check(rpar);
+		while (sym == ident) VarDecl();
+		Block();
 		
 	}
 	
@@ -221,6 +225,8 @@ public class Parser {
 	// Designator = ident {("." ident) | ("[" Expr "]")}.
 	private static void Designator()
 	{
+		System.out.println("Before Designator sym == "+sym);
+		System.out.println("-- Designator()");
 		check(ident);
 		for(;;){
 			if(sym == period)
