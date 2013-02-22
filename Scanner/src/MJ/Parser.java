@@ -120,7 +120,6 @@ public class Parser {
 	// ConstDecl = ConstDecl = "final" Type ident "=" (number | charConst) ";".
 	private static void ConstDecl()
 	{
-		System.out.println("-- ConstDecl()");
 		check(final_);
 		//Need to add Type here
 		Type();
@@ -140,12 +139,10 @@ public class Parser {
 	// Type = ident ["[" "]"].
 	private static void VarDecl()
 	{
-		System.out.println("--VarDecl");
 		Type();
 		for(;;)
 		{
 			check(ident);
-			System.out.println("after ident, sym = " + sym);
 			if(sym == comma)scan();
 			else
 				break;
@@ -156,7 +153,6 @@ public class Parser {
 	// ClassDecl = "class" ident "{" {VarDecl} "}".
 	private static void ClassDecl()
 	{
-		System.out.println("ClassDecl()");
 		check(class_);
 		check(ident);
 		check(lbrace);
@@ -169,7 +165,6 @@ public class Parser {
 	// Type = ident ["[" "]"].
 	private static void MethodDecl()
 	{
-		System.out.println("-- MethodDecl()");
 		if(sym == ident) Type();
 		else if(sym == void_) check(void_);
 		else error("Not a valid method declaration!");
@@ -186,7 +181,6 @@ public class Parser {
 	// Type = ident [ "["  "]" ].
 	private static void Type()
 	{
-		System.out.println("-- Type()");
 		check(ident);
 		if(sym == lbrack)
 		{
@@ -198,7 +192,6 @@ public class Parser {
 	//FormPars = Type ident  {"," Type ident}.
 	private static void FormPars()
 	{
-		System.out.println("-- FormPars()");
 		for(;;)
 		{
 			Type();
@@ -213,7 +206,6 @@ public class Parser {
 	// Mulop = "*" | "/" | "%"
 	private static void Mulop()
 	{
-		System.out.println("-- Mulop()");
 		if(sym == times)scan();
 		else if(sym == slash)scan();
 		else if(sym == rem)scan();
@@ -223,7 +215,6 @@ public class Parser {
 	// Addop = "+" | "-".
 	private static void Addop()
 	{
-		System.out.println("-- Addop()");
 		if(sym == plus)scan();
 		else if(sym == minus)scan();
 		else error("Not a valid addition/subtraction");
@@ -232,8 +223,6 @@ public class Parser {
 	// Designator = ident {("." ident) | ("[" Expr "]")}.
 	private static void Designator()
 	{
-		System.out.println("Before Designator sym == "+sym);
-		System.out.println("-- Designator()");
 		check(ident);
 		for (;;){
 			if(sym == period){
@@ -251,7 +240,6 @@ public class Parser {
 	// Term = Factor {Mulop Factor}.
 	public static void Term()
 	{
-		System.out.println("-- Term()");
 		Factor();
 		while (sym == times || sym == slash || sym == rem) {
 			if (sym == times) scan();
@@ -264,7 +252,6 @@ public class Parser {
 	// Expr = ["-"] Term {Addop Term}.
 	public static void Expr()
 	{
-		System.out.println("-- Expr()");
 		if(sym == minus)scan();
 		Term();
 		while(sym == plus || sym == minus){
@@ -282,7 +269,6 @@ public class Parser {
 	// | "(" Expr ")".
 	public static void Factor()
 	{
-		System.out.println("-- Factor()");
 		if(sym == number)scan();
 		else if(sym == charCon)scan();
 		else if(sym == new_){
@@ -309,7 +295,6 @@ public class Parser {
 	// ActPars = "(" [ Expr {"," Expr} ] ")".
 	public static void ActPars()
 	{
-			System.out.println("-- ActPars()");
 		 	check(lpar);
 		 	for(;;){
 		 		if(sym == minus || sym == ident)
@@ -354,7 +339,6 @@ public class Parser {
 	| ";".  */
 	public static void Statement()
 	{
-		System.out.println("-- Statement");
 		if(sym == if_)
 		{
 			check(if_);
@@ -432,7 +416,6 @@ public class Parser {
 	// Block = "{" {Statement} "}".
 	public static void Block()
 	{
-		System.out.println("-- Block()");
 		check(lbrace);
 		while(sym == if_ || sym == ident || sym == while_ || sym == return_ || sym == read_ || sym == print_ || sym == lbrace || sym == semicolon)
 			Statement();
