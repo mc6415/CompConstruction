@@ -1,0 +1,10 @@
+COMPILER Tree
+CHARACTERS
+	letter = 'a' .. 'z' + 'A' .. 'Z' + '_' + '$'
+TOKENS
+	ident = letter{letter}.
+	
+PRODUCTIONS
+	Tree = '('[ident {Tree Tree}] ')'
+
+END Tree
