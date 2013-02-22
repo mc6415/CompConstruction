@@ -1,10 +1,11 @@
 COMPILER Tree
 CHARACTERS
-	letter = 'a' .. 'z' + 'A' .. 'Z' + '_' + '$'
+	letter = 'a' .. 'z' + 'A' .. 'Z'.
 TOKENS
 	ident = letter{letter}.
 	
 PRODUCTIONS
-	Tree = '('[ident {Tree Tree}] ')'
+	TreeGen = Tree.	
+	Tree = "("[ident {Tree Tree}] ")".
 
-END Tree
+END Tree.
