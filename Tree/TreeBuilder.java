@@ -17,7 +17,8 @@ public class TreeBuilder {
 		
 		
 		parser.Parse();
-		System.out.println(parser.la.kind);
+		if(parser.errors.count == 0) System.out.println("Well formed File");
+		
 				
 	}
 

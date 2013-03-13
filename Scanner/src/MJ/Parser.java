@@ -121,11 +121,9 @@ public class Parser {
 	private static void ConstDecl()
 	{
 		check(final_);
-		//Need to add Type here
 		Type();
 		check(ident);
 		check(assign);
-		//Add (number | charConst)
 		if(sym == number)
 			check(number);
 		else if(sym == charCon)
