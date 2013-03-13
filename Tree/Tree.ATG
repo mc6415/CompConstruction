@@ -3,6 +3,10 @@ CHARACTERS
 	letter = 'a' .. 'z' + 'A' .. 'Z'.
 TOKENS
 	ident = letter{letter}.
+	lpar = '('.
+	rpar = ')'.	
+	
+IGNORE '\t' + '\r' + '\n'	
 	
 PRODUCTIONS
 	TreeGen = Tree.	

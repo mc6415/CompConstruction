@@ -351,7 +351,7 @@ public class Scanner {
 
 	Token NextToken() {
 		while (ch == ' ' ||
-			ch >= 9 && ch <= 10 || ch == 13
+			false
 		) NextCh();
 
 		int recKind = noSym;
