@@ -120,6 +120,12 @@ public class Parser {
 	// ConstDecl = ConstDecl = "final" Type ident "=" (number | charConst) ";".
 	private static void ConstDecl()
 	{
+		if(declStart.get(sym)){
+			error("Invalid Constant Declaration");
+			while(!declFollow.get(sym))scan();
+			errDist=0;
+		}
+		
 		check(final_);
 		Type();
 		check(ident);
@@ -137,6 +143,12 @@ public class Parser {
 	// Type = ident ["[" "]"].
 	private static void VarDecl()
 	{
+		if(declStart.get(sym)){
+			error("Invalid Variable Declaration");
+			while(!declFollow.get(sym))scan();
+			errDist=0;
+		}
+		
 		Type();
 		for(;;)
 		{
@@ -151,6 +163,12 @@ public class Parser {
 	// ClassDecl = "class" ident "{" {VarDecl} "}".
 	private static void ClassDecl()
 	{
+		if(declStart.get(sym)){
+			error("Invalid Class Declaration");
+			while(!declFollow.get(sym))scan();
+			errDist=0;
+		}
+		
 		check(class_);
 		check(ident);
 		check(lbrace);
@@ -163,6 +181,12 @@ public class Parser {
 	// Type = ident ["[" "]"].
 	private static void MethodDecl()
 	{
+		if(declStart.get(sym)){
+			error("Invalid Method Declaration");
+			while(!declFollow.get(sym))scan();
+			errDist=0;
+		}
+		
 		if(sym == ident) Type();
 		else if(sym == void_) check(void_);
 		else error("Not a valid method declaration!");
@@ -250,6 +274,11 @@ public class Parser {
 	// Expr = ["-"] Term {Addop Term}.
 	public static void Expr()
 	{
+		if(!exprStart.get(sym)){
+			error("Invalid start of expression");
+			errDist=0;
+		}
+		
 		if(sym == minus)scan();
 		Term();
 		while(sym == plus || sym == minus){
@@ -337,6 +366,13 @@ public class Parser {
 	| ";".  */
 	public static void Statement()
 	{
+		
+		if(!statStart.get(sym)){
+			error("Invalid start of Statement");
+			while(!statSeqFollow.get(sym))scan();
+			errDist=0;
+		}
+		
 		if(sym == if_)
 		{
 			check(if_);
