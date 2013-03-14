@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 
 public class Parser {
@@ -7,6 +9,8 @@ public class Parser {
 	public static final int _rpar = 3;
 	public static final int maxT = 4;
 
+	public static final ArrayList<String> countries = new ArrayList<String>();
+	
 	static final boolean T = true;
 	static final boolean x = false;
 	static final int minErrDist = 2;
@@ -83,13 +87,17 @@ public class Parser {
 	}
 
 	void Tree() {
+		int i = 0;
 		Expect(2);
 		if (la.kind == 1) {
 			Get();
-			while (la.kind == 2) {
-				Tree();
+			countries.add(t.val);
+			//System.out.print(countries);
+			if (la.kind == 2) {
+				Tree();;
 				Tree();
 			}
+
 		}
 		Expect(3);
 	}
